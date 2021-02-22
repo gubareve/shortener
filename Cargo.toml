@@ -1,5 +1,5 @@
 [package]
-name = "dynamic-links"
+name = "shortener"
 version = "0.1.0"
 authors = ["Evan Gubarev <evan@evangubarev.com>"]
 edition = "2018"

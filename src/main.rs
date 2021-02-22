@@ -15,6 +15,8 @@ struct FirebaseResponse {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let firebase_location = "f.evang.dev";
+
     let mut api_key_file = match File::open(&Path::new("/etc/dynamic-links.conf")) {
         Ok(file) => file,
         Err(error) => {
@@ -88,8 +90,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             api_key
         ))
         .body(format!(
-            "{{\"longDynamicLink\":\"https://f.evang.dev?link={}\",\"suffix\":{{\"option\":\"{}\"}}}}",
-            args[1], mode
+            "{{\"longDynamicLink\":\"https://{}?link={}\",\"suffix\":{{\"option\":\"{}\"}}}}",
+            firebase_location, args[1], mode
         ))
         .send()?;
 
@@ -98,7 +100,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let response: FirebaseResponse = serde_json::from_str(&String::from(response_text)).unwrap();
 
-    let mut shortLink: String = match response.shortLink {
+    let mut output: String = match response.shortLink {
         None => format!(
             "🚨{}🚨\n{}",
             "Could not find the output url".red().bold(),
@@ -106,6 +108,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         ),
         Some(link) => format!("Got shortened link: {}", link.yellow().bold()),
     };
-    println!("{}", shortLink);
+    println!("{}", output);
     Ok(())
 }
