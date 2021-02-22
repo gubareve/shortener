@@ -95,7 +95,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             process::exit(1);
         }
     } else {
-        mode = "short".to_string();
+        mode = "SHORT".to_string();
     }
 
     let client = reqwest::blocking::Client::new();
