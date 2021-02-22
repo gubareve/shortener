@@ -115,7 +115,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let response: FirebaseResponse = serde_json::from_str(&String::from(response_text)).unwrap();
 
-    let mut output: String = match response.shortLink {
+    let output: String = match response.shortLink {
         None => format!(
             "🚨{}🚨\n{}",
             "Could not find the output url".red().bold(),
